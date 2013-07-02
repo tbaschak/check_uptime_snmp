@@ -1,12 +1,17 @@
 #!/bin/bash
 
+## 2013-07-02, Theo Baschak (based on the work of Ingo Lantschner and
+## Fredrik Wanglund)
+## This plugin warns CRITICAL when uptime is less than threshold, and
+## WARNING when less than second threshold.
+
 ## 2006-10-23, Ingo Lantschner (based on the work of Fredrik Wanglund)
 ## This Plugin gets the uptime from any host (*nix/Windows) by SNMP
 
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 
 PROGNAME=`basename $0`
-REVISION=`echo 'Revision: 0.2 ' `
+REVISION=`echo 'Revision: 0.3t ' `
 NAGIOSPLUGSDIR=/usr/lib/nagios/plugins
 WARN=$3
 CRIT=$4
@@ -63,10 +68,10 @@ if [ $WARN -lt $CRIT ]; then
 
 ## Now we start checking ...
 
-UPT=$($NAGIOSPLUGSDIR/check_snmp -H $1 -C $2 -o .1.3.6.1.2.1.1.3.0 -w $3 -c $4 | cut -d " " -f 1-4) 
+UPT=$(snmpget -Oqvt -v1 -c $2 $1 .1.3.6.1.2.1.1.3.0)
 RES=$?
 
-UPTMIN=$(expr $(echo $UPT | cut -d "*" -f2) / 6000 )
+UPTMIN=$(expr $(echo $UPT ) / 6000 )
 
 if  [ $RES = 0 ]; then
    UPTDAY=$(expr $UPTMIN / 60 / 24 )
