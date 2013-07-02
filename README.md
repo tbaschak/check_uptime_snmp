@@ -12,3 +12,8 @@ OK: System uptime 81 Days
 Compatibility
 ----------
 This script relies on the existence of 1.3.6.1.2.1.1.3.0 which *most* SNMP devices provide. 
+
+Caveats
+----------
+SNMP returns the uptime of the SNMP process. This may not be the same as system uptime if the daemon is restarted. 
+
