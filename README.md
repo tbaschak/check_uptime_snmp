@@ -5,8 +5,7 @@ This is a simple check script for Nagios (or probably Icinga or Shrinken too) to
 To Use
 ----------
 `bash check_uptime_snmp.sh 192.0.2.1 public 2 1`
-
-`OK: System uptime 81 Days
+`OK: System uptime 81 Days`
 
 Compatibility
 ----------
